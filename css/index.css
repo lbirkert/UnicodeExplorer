@@ -1,0 +1,104 @@
+/**
+* █░█ █▄░█ █ █▀▀ █▀█ █▀▄ █▀▀ █▀▀ ▀▄▀ █▀█ █░░ █▀█ █▀█ █▀▀ █▀█
+* █▄█ █░▀█ █ █▄▄ █▄█ █▄▀ ██▄ ██▄ █░█ █▀▀ █▄▄ █▄█ █▀▄ ██▄ █▀▄
+*
+* https://github.com/KekOnTheWorld/UnicodeExplorer/blob/master/LICENSE
+*
+* (c) 2022 KekOnTheWorld
+*/
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: black;
+    color: white;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+@supports (font-variation-settings: normal) {
+    body { font-family: 'Inter var', sans-serif; }
+}
+
+#wrapper {
+    height: 100%;
+    overflow: scroll;
+}
+
+#unicodes li {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 300px;
+    height: 300px;
+}
+
+#unicodes li p {
+    width: 65px;
+    height: 65px;
+    background-color: rgb(35, 35, 35);
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+#unicodes li p:hover {
+    background-color: rgb(57, 57, 57);
+}
+
+#unicodes li p:active {
+    background-color: rgb(87, 248, 24);
+    color: black;
+}
+
+#unicodes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.header {
+    max-width: 1300px;
+    width: 90%;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.header main p {
+    color: rgb(169, 169, 169);
+    font-size: 18px;
+}
+
+.header a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.header a svg {
+    width: 40px;
+    height: 40px;
+}
+
+.header a:hover {
+    color: rgb(172, 172, 172);
+    text-decoration: none;
+}
