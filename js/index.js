@@ -12,10 +12,10 @@ const wrapper = document.getElementById("wrapper");
 /** @type { HTMLUListElement } */
 const unicodes = document.getElementById("unicodes");
 
-const PAGE_SIZE = 16;
+const PAGE_SIZE = 9;
 const PAGE_COUNT = 65535 / PAGE_SIZE;
-const PAGE_WIDTH = 300;
-const PAGE_HEIGHT = 300;
+const PAGE_WIDTH = 120;
+const PAGE_HEIGHT = 120;
 
 let contentHeight = 0,
     contentWidth = 0;
@@ -38,12 +38,11 @@ function reposition() {
     let oldPagesPerRow = pagesPerRow,
         oldPagesPerCol = pagesPerCol;
 
-    pagesPerCol = Math.max(1, Math.ceil(height / PAGE_HEIGHT)) + 1;
     pagesPerRow = Math.max(1, Math.floor(width / PAGE_WIDTH));
-
+    pagesPerCol = Math.min(Math.ceil(PAGE_COUNT / pagesPerRow),
+            Math.max(1, Math.ceil(height / PAGE_HEIGHT))) + 1;
     
-    contentHeight = (PAGE_COUNT * PAGE_HEIGHT) / pagesPerRow;
-    console.log(contentHeight);
+    contentHeight = (Math.ceil(PAGE_COUNT / pagesPerRow) + 1) * PAGE_HEIGHT;
     contentWidth = pagesPerRow * PAGE_WIDTH;
 
     
@@ -61,22 +60,22 @@ reposition();
 function update() {
     if(offset !== (offset = Math.floor(wrapper.scrollTop / PAGE_HEIGHT))) {
         const offsetHeight = offset * PAGE_HEIGHT;
-        console.log(contentHeight, offsetHeight);
-        unicodes.style.paddingTop = Math.min(contentHeight, offsetHeight) + "px";
-        unicodes.style.paddingBottom = Math.max(0, contentHeight - offsetHeight) + "px";
+        const _contentHeight = contentHeight - pagesPerCol * PAGE_HEIGHT;
+        unicodes.style.paddingTop = Math.min(_contentHeight, offsetHeight) + "px";
+        unicodes.style.paddingBottom = Math.max(0, _contentHeight - offsetHeight) + "px";
 
         pages.forEach((pageEl, j) => {
             pageEl.innerText = "";
-            const _offset = (offset * pagesPerRow + j) * PAGE_SIZE;
+            const _offset = ((offset - (_contentHeight - offsetHeight < 0) - 1) * pagesPerRow + j) * PAGE_SIZE;
             for(let i = 0; i < PAGE_SIZE; i++) {
                 const char = _offset + i;
-                if(char <= 65535) {
-                    const unicode = pageEl.appendChild(document.createElement("p"));
+                const unicode = pageEl.appendChild(document.createElement("p"));
+                if(char <= 65535 && char >= 0) {
                     unicode.addEventListener("click", () => {
                         navigator.clipboard.writeText(String.fromCharCode(char));
                     });
                     unicode.innerText = String.fromCharCode(char);
-                }
+                } else unicode.className = "hidden";
             }
         });
     }

@@ -37,23 +37,25 @@ body {
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-    width: 300px;
-    height: 300px;
+    width: 120px;
+    height: 120px;
 }
 
 #unicodes li p {
-    width: 65px;
-    height: 65px;
-    background-color: rgb(35, 35, 35);
-    font-size: 40px;
+    width: 35px;
+    height: 35px;
+    background-color: rgb(20, 20, 20);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 25px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
+    border-radius: 5px;
     cursor: pointer;
     user-select: none;
     transition: color 0.3s ease, background-color 0.3s ease;
 }
+
 
 #unicodes li p:hover {
     background-color: rgb(57, 57, 57);
@@ -62,6 +64,10 @@ body {
 #unicodes li p:active {
     background-color: rgb(87, 248, 24);
     color: black;
+}
+
+#unicodes li p.hidden {
+    background-color: transparent;
 }
 
 #unicodes {
@@ -73,18 +79,19 @@ body {
 .header {
     max-width: 1300px;
     width: 90%;
-    padding: 20px 30px;
+    min-width: min(100%, 400px);
+    padding: 10px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(20, 20, 20, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-top: none;
     backdrop-filter: blur(5px);
-    border-radius: 0 0 20px 20px;
+    border-radius: 0 0 10px 10px;
 }
 
 .header main p {
