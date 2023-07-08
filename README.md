@@ -11,4 +11,4 @@
 
 A Tool to view all of the 65535 unique unicode characters.
 
-[Demo here](https://kotw.dev/UnicodeExplorer)
+[Demo here](https://lbirkert.com/UnicodeExplorer)
