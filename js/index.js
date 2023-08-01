@@ -2,9 +2,9 @@
 * █░█ █▄░█ █ █▀▀ █▀█ █▀▄ █▀▀ █▀▀ ▀▄▀ █▀█ █░░ █▀█ █▀█ █▀▀ █▀█
 * █▄█ █░▀█ █ █▄▄ █▄█ █▄▀ ██▄ ██▄ █░█ █▀▀ █▄▄ █▄█ █▀▄ ██▄ █▀▄
 *
-* https://github.com/KekOnTheWorld/UnicodeExplorer/blob/master/LICENSE
+* https://github.com/lbirkert/UnicodeExplorer/blob/master/LICENSE
 *
-* (c) 2022 KekOnTheWorld
+* (c) 2023 Lucas Birkert
 */
 
 /** @type { HTMLDivElement } */

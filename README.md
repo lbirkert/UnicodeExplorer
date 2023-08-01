@@ -2,13 +2,19 @@
  █░█ █▄░█ █ █▀▀ █▀█ █▀▄ █▀▀ █▀▀ ▀▄▀ █▀█ █░░ █▀█ █▀█ █▀▀ █▀█
  █▄█ █░▀█ █ █▄▄ █▄█ █▄▀ ██▄ ██▄ █░█ █▀▀ █▄▄ █▄█ █▀▄ ██▄ █▀▄
 
- https://github.com/KekOnTheWorld/UnicodeExplorer/blob/master/LICENSE
+ https://github.com/lbirkert/UnicodeExplorer/blob/master/LICENSE
 
- (c) 2022 KekOnTheWorld
+ (c) 2023 Lucas Birkert
  -->
 
-# UnicodeExplorer
+<h1>
+    <a href="https://lbirkert.com/UnicodeExplorer">UnicodeExplorer</a>
+</h1>
 
-A Tool to view all of the 65535 unique unicode characters.
+Explore the magic of unicode. UnicodeExplorer is an almost infinite scroller for the unicode spectrum.
 
-[Demo here](https://lbirkert.com/UnicodeExplorer)
+<br>
+<hr>
+
+[LICENSE](LICENSE) | &copy; 2023 [Lucas Birkert](https://lbirkert.com) 2023
+
