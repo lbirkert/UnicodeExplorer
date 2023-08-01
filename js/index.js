@@ -12,73 +12,100 @@ const wrapper = document.getElementById("wrapper");
 /** @type { HTMLUListElement } */
 const unicodes = document.getElementById("unicodes");
 
-const PAGE_SIZE = 9;
-const PAGE_COUNT = 65535 / PAGE_SIZE;
-const PAGE_WIDTH = 120;
-const PAGE_HEIGHT = 120;
+const CELL_WIDTH = 35;
+const CELL_HEIGHT = 35;
+const CHARS = 65536;
 
-let contentHeight = 0,
-    contentWidth = 0;
-let width = 0,
-    height = 0;
-let pagesPerCol = 1,
-    pagesPerRow = 1;
-let offset = -1;
+// The amount of rows that will be padded to the start/end
+const START_PADDING = 5;
+const END_PADDING = 5;
 
-/** @type { HTMLLIElement[] } */
-let pages = [];
+let cellsPerRow,
+    rowsPerView,
+    rows,
+    row = 0,
+    scrollTop = wrapper.scrollTop;
 
-onresize = reposition;
+function reconstruct() {
+    // Clear container
+    unicodes.innerHTML = "";
 
-function reposition() {
-    const rect = wrapper.getBoundingClientRect();
-    width = rect.width;
-    height = rect.height;
+    cellsPerRow = Math.floor(document.body.clientWidth / CELL_WIDTH);
+    rowsPerView = Math.ceil(document.body.clientHeight / CELL_HEIGHT) + START_PADDING + END_PADDING;
+    rows = Math.ceil(CHARS / cellsPerRow) - 1;
+    row = Math.min(row, rows - rowsPerView);
 
-    let oldPagesPerRow = pagesPerRow,
-        oldPagesPerCol = pagesPerCol;
-
-    pagesPerRow = Math.max(1, Math.floor(width / PAGE_WIDTH));
-    pagesPerCol = Math.min(Math.ceil(PAGE_COUNT / pagesPerRow),
-            Math.max(1, Math.ceil(height / PAGE_HEIGHT))) + 1;
-    
-    contentHeight = (Math.ceil(PAGE_COUNT / pagesPerRow) + 1) * PAGE_HEIGHT;
-    contentWidth = pagesPerRow * PAGE_WIDTH;
-
-    
-    if(oldPagesPerCol !== pagesPerCol || oldPagesPerRow !== pagesPerRow) {
-        offset = -1;
-        unicodes.innerText = "";
-        pages = new Array(pagesPerRow * pagesPerCol).fill(0).map(() => unicodes.appendChild(document.createElement("li")));
+    for (let i = 0; i < rowsPerView; i++) {
+        unicodes.appendChild(createRow(i + row));
     }
 
     update();
 }
 
-reposition();
+function createRow(pos) {
+    const rowEl = document.createElement("li");
+    for (let i = 0; i < cellsPerRow; i++) {
+        rowEl.appendChild(createCell(pos * cellsPerRow + i));
+    }
+    return rowEl;
+}
+
+function createCell(pos) {
+    const cellEl = document.createElement("p");
+    if (pos >= 0 && pos < CHARS) {
+        const char = String.fromCharCode(pos);
+        cellEl.innerText = char;
+        cellEl.onclick = () => window.navigator.clipboard.writeText(char);
+    } else {
+        cellEl.className = "empty";
+    }
+    return cellEl;
+}
+
+let isUpdating = false;
+
+window.onresize = reconstruct;
+reconstruct();
+wrapper.onscroll = () => {
+    scrollTop = wrapper.scrollTop;
+    if (!isUpdating) update();
+}
 
 function update() {
-    if(offset !== (offset = Math.floor(wrapper.scrollTop / PAGE_HEIGHT))) {
-        const offsetHeight = offset * PAGE_HEIGHT;
-        const _contentHeight = contentHeight - pagesPerCol * PAGE_HEIGHT;
-        unicodes.style.paddingTop = Math.min(_contentHeight, offsetHeight) + "px";
-        unicodes.style.paddingBottom = Math.max(0, _contentHeight - offsetHeight) + "px";
+    isUpdating = true;
+    const scrollRow = Math.floor(scrollTop / CELL_HEIGHT);
 
-        pages.forEach((pageEl, j) => {
-            pageEl.innerText = "";
-            const _offset = ((offset - (_contentHeight - offsetHeight < 0) - 1) * pagesPerRow + j) * PAGE_SIZE;
-            for(let i = 0; i < PAGE_SIZE; i++) {
-                const char = _offset + i;
-                const unicode = pageEl.appendChild(document.createElement("p"));
-                if(char <= 65535 && char >= 0) {
-                    unicode.addEventListener("click", () => {
-                        navigator.clipboard.writeText(String.fromCharCode(char));
-                    });
-                    unicode.innerText = String.fromCharCode(char);
-                } else unicode.className = "hidden";
-            }
-        });
+    if (Math.abs(scrollRow - row) > rowsPerView) {
+        row = scrollRow - START_PADDING;
+        reconstruct();
+        isUpdating = false;
+        return;
+    }
+
+    for (let i = 0; i < 5; i++) {
+        if (scrollRow - row > START_PADDING && row < rows - rowsPerView) {
+            row += 1;
+            unicodes.children[0].remove();
+            unicodes.append(createRow(row + rowsPerView));
+        }
+
+        if (scrollRow - row < START_PADDING && row > 0) {
+            row -= 1;
+            unicodes.children[rowsPerView - 1].remove();
+            unicodes.prepend(createRow(row));
+        }
+    }
+
+    updatePadding();
+
+    if (scrollRow - row != START_PADDING && row > 0 && row < rows - rowsPerView) {
+        requestAnimationFrame(update);
+    } else {
+        isUpdating = false;
     }
 }
 
-wrapper.onscroll = update;
+function updatePadding() {
+    unicodes.style.paddingTop = (row) * CELL_HEIGHT + "px";
+    unicodes.style.paddingBottom = (rows - rowsPerView - row) * CELL_HEIGHT + "px";
+}

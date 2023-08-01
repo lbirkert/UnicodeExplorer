@@ -16,6 +16,7 @@
 body {
     font-family: 'Inter', sans-serif;
     background-color: black;
+    overflow-x: hidden;
     color: white;
     overflow: hidden;
     height: 100vh;
@@ -32,51 +33,46 @@ body {
     overflow: scroll;
 }
 
-#unicodes li {
+li {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-    width: 120px;
-    height: 120px;
 }
 
-#unicodes li p {
+li p {
     width: 35px;
     height: 35px;
+
     background-color: rgb(20, 20, 20);
     border: 1px solid rgba(255, 255, 255, 0.1);
     font-size: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     border-radius: 5px;
     cursor: pointer;
     user-select: none;
+    text-align: center;
+
     transition: color 0.3s ease, background-color 0.3s ease;
 }
 
 
-#unicodes li p:hover {
+li p:hover {
     background-color: rgb(57, 57, 57);
 }
 
-#unicodes li p:active {
+li p:active {
     background-color: rgb(87, 248, 24);
     color: black;
 }
 
-#unicodes li p.hidden {
+li p.empty {
     background-color: transparent;
 }
 
 #unicodes {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     justify-content: center;
 }
 
-.header {
+header {
     max-width: 1300px;
     width: 90%;
     min-width: min(100%, 400px);
@@ -92,25 +88,26 @@ body {
     border-top: none;
     backdrop-filter: blur(5px);
     border-radius: 0 0 10px 10px;
+    z-index: 100;
 }
 
-.header main p {
+header main p {
     color: rgb(169, 169, 169);
     font-size: 18px;
 }
 
-.header a {
+header a {
     color: white;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
-.header a svg {
+header a svg {
     width: 40px;
     height: 40px;
 }
 
-.header a:hover {
+header a:hover {
     color: rgb(172, 172, 172);
     text-decoration: none;
 }
