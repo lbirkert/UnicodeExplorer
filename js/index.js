@@ -28,12 +28,13 @@ let cellsPerRow,
 
 function reconstruct() {
     // Clear container
-    unicodes.innerHTML = "";
-
     cellsPerRow = Math.floor(document.body.clientWidth / CELL_WIDTH);
     rowsPerView = Math.ceil(document.body.clientHeight / CELL_HEIGHT) + START_PADDING + END_PADDING;
-    rows = Math.ceil(CHARS / cellsPerRow) - 1;
+    rows = Math.ceil(CHARS / cellsPerRow) + 2;
     row = Math.min(row, rows - rowsPerView);
+
+    unicodes.style.height = rows * CELL_HEIGHT + "px";
+    unicodes.innerHTML = "";
 
     for (let i = 0; i < rowsPerView; i++) {
         unicodes.appendChild(createRow(i + row));
@@ -45,7 +46,7 @@ function reconstruct() {
 function createRow(pos) {
     const rowEl = document.createElement("li");
     for (let i = 0; i < cellsPerRow; i++) {
-        rowEl.appendChild(createCell(pos * cellsPerRow + i));
+        rowEl.appendChild(createCell((pos - 3) * cellsPerRow + i));
     }
     return rowEl;
 }
@@ -75,8 +76,8 @@ function update() {
     isUpdating = true;
     const scrollRow = Math.floor(scrollTop / CELL_HEIGHT);
 
-    if (Math.abs(scrollRow - row) > rowsPerView) {
-        row = scrollRow - START_PADDING;
+    if (Math.abs(scrollRow - row) > rowsPerView + START_PADDING) {
+        row = Math.max(0, scrollRow - START_PADDING);
         reconstruct();
         isUpdating = false;
         return;
@@ -107,5 +108,4 @@ function update() {
 
 function updatePadding() {
     unicodes.style.paddingTop = (row) * CELL_HEIGHT + "px";
-    unicodes.style.paddingBottom = (rows - rowsPerView - row) * CELL_HEIGHT + "px";
 }
