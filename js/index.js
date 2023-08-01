@@ -12,8 +12,8 @@ const wrapper = document.getElementById("wrapper");
 /** @type { HTMLUListElement } */
 const unicodes = document.getElementById("unicodes");
 
-const CELL_WIDTH = 35;
-const CELL_HEIGHT = 35;
+const CELL_WIDTH = 44;
+const CELL_HEIGHT = 44;
 const CHARS = 65536;
 
 // The amount of rows that will be padded to the start/end
