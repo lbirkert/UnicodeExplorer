@@ -31,11 +31,25 @@ body {
     height: 100%;
     overflow: scroll;
     overflow-x: hidden;
-    margin: auto;
+    scrollbar-color: #fff #000;
+}
+
+#wrapper::-webkit-scrollbar {
+    width: 12px;
+}
+
+#wrapper::-webkit-scrollbar-track {
+    background: #000;
+}
+
+#wrapper::-webkit-scrollbar thumb {
+    background: #fff;
+    border-radius: 10px;
 }
 
 li {
     display: flex;
+    justify-content: center;
 }
 
 li p {
@@ -132,6 +146,7 @@ header a:hover {
 @media(max-width: 750px) {
     header {
         border-left: none;
+        border-right: none;
         right: none;
         width: 100%;
         border-radius: 0;
