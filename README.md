@@ -16,5 +16,5 @@ Explore the magic of unicode. UnicodeExplorer is an almost infinite scroller for
 <br>
 <hr>
 
-[LICENSE](LICENSE) | &copy; 2023 [Lucas Birkert](https://lbirkert.com) 2023
+[LICENSE](LICENSE) | &copy; [Lucas Birkert](https://lbirkert.com) 2023
 
