@@ -30,7 +30,7 @@ function reconstruct() {
     // Clear container
     cellsPerRow = Math.floor(document.body.clientWidth / CELL_WIDTH);
     rowsPerView = Math.ceil(document.body.clientHeight / CELL_HEIGHT) + START_PADDING + END_PADDING;
-    rows = Math.ceil(CHARS / cellsPerRow) + 2;
+    rows = Math.ceil(CHARS / cellsPerRow) + 1;
     row = Math.min(row, rows - rowsPerView);
 
     unicodes.style.height = rows * CELL_HEIGHT + "px";
@@ -46,7 +46,7 @@ function reconstruct() {
 function createRow(pos) {
     const rowEl = document.createElement("li");
     for (let i = 0; i < cellsPerRow; i++) {
-        rowEl.appendChild(createCell((pos - 3) * cellsPerRow + i));
+        rowEl.appendChild(createCell((pos - 2) * cellsPerRow + i));
     }
     return rowEl;
 }
